@@ -1,5 +1,5 @@
-//use oboe_sys as ffi;
 use num_traits::FromPrimitive;
+use oboe_sys as ffi;
 
 use std::fmt::{self, Display};
 
@@ -103,71 +103,119 @@ pub trait AudioStreamBase {
 
 impl<T: RawAudioStreamBase> AudioStreamBase for T {
     fn get_channel_count(&self) -> ChannelCount {
-        FromPrimitive::from_i32(self._raw_base().mChannelCount).unwrap()
+        FromPrimitive::from_i32(unsafe {
+            ffi::oboe_AudioStreamBase_getChannelCount(self._raw_base() as *const _ as *mut _)
+        })
+        .unwrap()
     }
 
     fn get_direction(&self) -> Direction {
-        FromPrimitive::from_i32(self._raw_base().mDirection).unwrap()
+        FromPrimitive::from_i32(unsafe {
+            ffi::oboe_AudioStreamBase_getDirection(self._raw_base() as *const _ as *mut _)
+        })
+        .unwrap()
     }
 
     fn get_sample_rate(&self) -> i32 {
-        self._raw_base().mSampleRate
+        unsafe { ffi::oboe_AudioStreamBase_getSampleRate(self._raw_base() as *const _ as *mut _) }
     }
 
     fn get_frames_per_callback(&self) -> i32 {
-        self._raw_base().mFramesPerCallback
+        unsafe {
+            ffi::oboe_AudioStreamBase_getFramesPerCallback(self._raw_base() as *const _ as *mut _)
+        }
     }
 
     fn get_format(&self) -> AudioFormat {
-        FromPrimitive::from_i32(self._raw_base().mFormat).unwrap()
+        FromPrimitive::from_i32(unsafe {
+            ffi::oboe_AudioStreamBase_getFormat(self._raw_base() as *const _ as *mut _)
+        })
+        .unwrap()
     }
 
     fn get_buffer_size_in_frames(&self) -> i32 {
-        self._raw_base().mBufferSizeInFrames
+        unsafe {
+            ffi::oboe_AudioStreamBase_getBufferSizeInFrames(self._raw_base() as *const _ as *mut _)
+        }
     }
 
     fn get_buffer_capacity_in_frames(&self) -> i32 {
-        self._raw_base().mBufferCapacityInFrames
+        unsafe {
+            ffi::oboe_AudioStreamBase_getBufferCapacityInFrames(
+                self._raw_base() as *const _ as *mut _
+            )
+        }
     }
 
     fn get_sharing_mode(&self) -> SharingMode {
-        FromPrimitive::from_i32(self._raw_base().mSharingMode).unwrap()
+        FromPrimitive::from_i32(unsafe {
+            ffi::oboe_AudioStreamBase_getSharingMode(self._raw_base() as *const _ as *mut _)
+        })
+        .unwrap()
     }
 
     fn get_performance_mode(&self) -> PerformanceMode {
-        FromPrimitive::from_i32(self._raw_base().mPerformanceMode).unwrap()
+        FromPrimitive::from_i32(unsafe {
+            ffi::oboe_AudioStreamBase_getPerformanceMode(self._raw_base() as *const _ as *mut _)
+        })
+        .unwrap()
     }
 
     fn get_device_id(&self) -> i32 {
-        self._raw_base().mDeviceId
+        unsafe { ffi::oboe_AudioStreamBase_getDeviceId(self._raw_base() as *const _ as *mut _) }
     }
 
     fn get_usage(&self) -> Usage {
-        FromPrimitive::from_i32(self._raw_base().mUsage).unwrap()
+        FromPrimitive::from_i32(unsafe {
+            ffi::oboe_AudioStreamBase_getUsage(self._raw_base() as *const _ as *mut _)
+        })
+        .unwrap()
     }
 
     fn get_content_type(&self) -> ContentType {
-        FromPrimitive::from_i32(self._raw_base().mContentType).unwrap()
+        FromPrimitive::from_i32(unsafe {
+            ffi::oboe_AudioStreamBase_getContentType(self._raw_base() as *const _ as *mut _)
+        })
+        .unwrap()
     }
 
     fn get_input_preset(&self) -> InputPreset {
-        FromPrimitive::from_i32(self._raw_base().mInputPreset).unwrap()
+        FromPrimitive::from_i32(unsafe {
+            ffi::oboe_AudioStreamBase_getInputPreset(self._raw_base() as *const _ as *mut _)
+        })
+        .unwrap()
     }
 
     fn get_session_id(&self) -> SessionId {
-        FromPrimitive::from_i32(self._raw_base().mSessionId).unwrap()
+        FromPrimitive::from_i32(unsafe {
+            ffi::oboe_AudioStreamBase_getSessionId(self._raw_base() as *const _ as *mut _)
+        })
+        .unwrap()
     }
 
     fn is_channel_conversion_allowed(&self) -> bool {
-        self._raw_base().mChannelConversionAllowed
+        unsafe {
+            ffi::oboe_AudioStreamBase_isChannelConversionAllowed(
+                self._raw_base() as *const _ as *mut _
+            )
+        }
     }
 
     fn is_format_conversion_allowed(&self) -> bool {
-        self._raw_base().mFormatConversionAllowed
+        unsafe {
+            ffi::oboe_AudioStreamBase_isFormatConversionAllowed(
+                self._raw_base() as *const _ as *mut _
+            )
+        }
     }
 
     fn get_sample_rate_conversion_quality(&self) -> SampleRateConversionQuality {
-        FromPrimitive::from_i32(self._raw_base().mSampleRateConversionQuality).unwrap()
+        FromPrimitive::from_i32(unsafe {
+            ffi::oboe_AudioStreamBase_getSampleRateConversionQuality(
+                self._raw_base() as *const _ as *mut _
+            )
+        })
+        .unwrap()
     }
 }
 

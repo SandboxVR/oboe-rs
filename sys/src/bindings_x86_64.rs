@@ -826,13 +826,13 @@ extern "C" {
 #[repr(align(8))]
 #[derive(Debug, Copy, Clone)]
 pub struct oboe_AudioStreamBuilder {
-    pub _bindgen_opaque_blob: [u64; 26usize],
+    pub _bindgen_opaque_blob: [u64; 34usize],
 }
 #[test]
 fn bindgen_test_layout_oboe_AudioStreamBuilder() {
     assert_eq!(
         ::std::mem::size_of::<oboe_AudioStreamBuilder>(),
-        208usize,
+        272usize,
         concat!("Size of: ", stringify!(oboe_AudioStreamBuilder))
     );
     assert_eq!(
@@ -865,13 +865,13 @@ impl oboe_AudioStreamBuilder {
 #[repr(C)]
 #[repr(align(8))]
 pub struct oboe_AudioStream {
-    pub _bindgen_opaque_blob: [u64; 38usize],
+    pub _bindgen_opaque_blob: [u64; 45usize],
 }
 #[test]
 fn bindgen_test_layout_oboe_AudioStream() {
     assert_eq!(
         ::std::mem::size_of::<oboe_AudioStream>(),
-        304usize,
+        360usize,
         concat!("Size of: ", stringify!(oboe_AudioStream))
     );
     assert_eq!(

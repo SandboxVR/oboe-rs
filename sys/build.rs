@@ -7,6 +7,15 @@ use std::{
 };
 
 fn main() {
+    for path in [
+        "oboe-ext/include/oboe/OboeExt.h",
+        "oboe-ext/src/AudioStreamBuilderWrapper.cpp",
+        "oboe-ext/src/AudioStreamCallbackWrapper.cpp",
+        "oboe-ext/src/AudioStreamWrapper.cpp",
+    ] {
+        println!("cargo:rerun-if-changed={path}");
+    }
+
     // Skip build on docs.rs and CI
     if matches!(env::var("DOCS_RS"), Ok(s) if s == "1") {
         return;

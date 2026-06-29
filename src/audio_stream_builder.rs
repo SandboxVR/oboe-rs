@@ -124,7 +124,12 @@ impl<D, C, T> AudioStreamBuilder<D, C, T> {
      */
     pub fn set_channel_count<X: IsChannelCount>(self) -> AudioStreamBuilder<D, X, T> {
         let mut builder = self.convert();
-        builder._raw_base_mut().mChannelCount = X::CHANNEL_COUNT as i32;
+        unsafe {
+            ffi::oboe_AudioStreamBuilder_setChannelCount(
+                &mut **builder.raw,
+                X::CHANNEL_COUNT as i32,
+            )
+        };
         builder
     }
 
@@ -149,7 +154,9 @@ impl<D, C, T> AudioStreamBuilder<D, C, T> {
      */
     pub fn set_direction<X: IsDirection>(self) -> AudioStreamBuilder<X, C, T> {
         let mut builder = self.convert();
-        builder._raw_base_mut().mDirection = X::DIRECTION as i32;
+        unsafe {
+            ffi::oboe_AudioStreamBuilder_setDirection(&mut **builder.raw, X::DIRECTION as i32)
+        };
         builder
     }
 
@@ -180,7 +187,7 @@ impl<D, C, T> AudioStreamBuilder<D, C, T> {
      * But it is traditionally called _sample rate_. Se we use that term.
      */
     pub fn set_sample_rate(mut self, sample_rate: i32) -> Self {
-        self._raw_base_mut().mSampleRate = sample_rate;
+        unsafe { ffi::oboe_AudioStreamBuilder_setSampleRate(&mut **self.raw, sample_rate) };
         self
     }
 
@@ -196,7 +203,9 @@ impl<D, C, T> AudioStreamBuilder<D, C, T> {
      * oriented operations, then call this function to get the sizes you need.
      */
     pub fn set_frames_per_callback(mut self, frames_per_callback: i32) -> Self {
-        self._raw_base_mut().mFramesPerCallback = frames_per_callback;
+        unsafe {
+            ffi::oboe_AudioStreamBuilder_setFramesPerCallback(&mut **self.raw, frames_per_callback)
+        };
         self
     }
 
@@ -208,7 +217,7 @@ impl<D, C, T> AudioStreamBuilder<D, C, T> {
      */
     pub fn set_format<X: IsFormat>(self) -> AudioStreamBuilder<D, C, X> {
         let mut builder = self.convert();
-        builder._raw_base_mut().mFormat = X::FORMAT as i32;
+        unsafe { ffi::oboe_AudioStreamBuilder_setFormat(&mut **builder.raw, X::FORMAT as i32) };
         builder
     }
 
@@ -230,7 +239,12 @@ impl<D, C, T> AudioStreamBuilder<D, C, T> {
      * Default is unspecified.
      */
     pub fn set_buffer_capacity_in_frames(mut self, buffer_capacity_in_frames: i32) -> Self {
-        self._raw_base_mut().mBufferCapacityInFrames = buffer_capacity_in_frames;
+        unsafe {
+            ffi::oboe_AudioStreamBuilder_setBufferCapacityInFrames(
+                &mut **self.raw,
+                buffer_capacity_in_frames,
+            )
+        };
         self
     }
 
@@ -287,7 +301,9 @@ impl<D, C, T> AudioStreamBuilder<D, C, T> {
      * So the application should query for the actual mode after the stream is opened.
      */
     pub fn set_sharing_mode(mut self, sharing_mode: SharingMode) -> Self {
-        self._raw_base_mut().mSharingMode = sharing_mode as i32;
+        unsafe {
+            ffi::oboe_AudioStreamBuilder_setSharingMode(&mut **self.raw, sharing_mode as i32)
+        };
         self
     }
 
@@ -311,7 +327,12 @@ impl<D, C, T> AudioStreamBuilder<D, C, T> {
      * protection from glitches.
      */
     pub fn set_performance_mode(mut self, performance_mode: PerformanceMode) -> Self {
-        self._raw_base_mut().mPerformanceMode = performance_mode as i32;
+        unsafe {
+            ffi::oboe_AudioStreamBuilder_setPerformanceMode(
+                &mut **self.raw,
+                performance_mode as i32,
+            )
+        };
         self
     }
 
@@ -326,7 +347,7 @@ impl<D, C, T> AudioStreamBuilder<D, C, T> {
      * Added in API level 28.
      */
     pub fn set_usage(mut self, usage: Usage) -> Self {
-        self._raw_base_mut().mUsage = usage as i32;
+        unsafe { ffi::oboe_AudioStreamBuilder_setUsage(&mut **self.raw, usage as i32) };
         self
     }
 
@@ -341,7 +362,9 @@ impl<D, C, T> AudioStreamBuilder<D, C, T> {
      * Added in API level 28.
      */
     pub fn set_content_type(mut self, content_type: ContentType) -> Self {
-        self._raw_base_mut().mContentType = content_type as i32;
+        unsafe {
+            ffi::oboe_AudioStreamBuilder_setContentType(&mut **self.raw, content_type as i32)
+        };
         self
     }
 
@@ -359,7 +382,9 @@ impl<D, C, T> AudioStreamBuilder<D, C, T> {
      * Added in API level 28.
      */
     pub fn set_input_preset(mut self, input_preset: InputPreset) -> Self {
-        self._raw_base_mut().mInputPreset = input_preset as i32;
+        unsafe {
+            ffi::oboe_AudioStreamBuilder_setInputPreset(&mut **self.raw, input_preset as i32)
+        };
         self
     }
 
@@ -387,7 +412,7 @@ impl<D, C, T> AudioStreamBuilder<D, C, T> {
      * Added in API level 28.
      */
     pub fn set_session_id(mut self, session_id: SessionId) -> Self {
-        self._raw_base_mut().mSessionId = session_id as i32;
+        unsafe { ffi::oboe_AudioStreamBuilder_setSessionId(&mut **self.raw, session_id as i32) };
         self
     }
 
@@ -408,7 +433,7 @@ impl<D, C, T> AudioStreamBuilder<D, C, T> {
      * stream will have device ID unspecified.
      */
     pub fn set_device_id(mut self, device_id: i32) -> Self {
-        self._raw_base_mut().mDeviceId = device_id;
+        unsafe { ffi::oboe_AudioStreamBuilder_setDeviceId(&mut **self.raw, device_id) };
         self
     }
 
@@ -422,7 +447,9 @@ impl<D, C, T> AudioStreamBuilder<D, C, T> {
      * Default is true.
      */
     pub fn set_channel_conversion_allowed(mut self, allowed: bool) -> Self {
-        self._raw_base_mut().mChannelConversionAllowed = allowed;
+        unsafe {
+            ffi::oboe_AudioStreamBuilder_setChannelConversionAllowed(&mut **self.raw, allowed)
+        };
         self
     }
 
@@ -434,7 +461,9 @@ impl<D, C, T> AudioStreamBuilder<D, C, T> {
      * Default is true.
      */
     pub fn set_format_conversion_allowed(mut self, allowed: bool) -> Self {
-        self._raw_base_mut().mFormatConversionAllowed = allowed;
+        unsafe {
+            ffi::oboe_AudioStreamBuilder_setFormatConversionAllowed(&mut **self.raw, allowed)
+        };
         self
     }
 
@@ -453,7 +482,12 @@ impl<D, C, T> AudioStreamBuilder<D, C, T> {
         mut self,
         quality: SampleRateConversionQuality,
     ) -> Self {
-        self._raw_base_mut().mSampleRateConversionQuality = quality as i32;
+        unsafe {
+            ffi::oboe_AudioStreamBuilder_setSampleRateConversionQuality(
+                &mut **self.raw,
+                quality as i32,
+            )
+        };
         self
     }
 
