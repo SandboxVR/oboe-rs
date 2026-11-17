@@ -11,6 +11,14 @@ env:
   NDK_VERSION: '25.2.9519653'
   ANDROID_PLATFORM: '34'
 jobs:
+  native-lifetime:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - run: python3 tests/host/run.py
+
   format:
     runs-on: ubuntu-latest
     steps:
@@ -78,6 +86,7 @@ jobs:
           target: x86_64-linux-android
           components: clippy
       - uses: Swatinem/rust-cache@v2
+      - run: python3 tests/check_layouts.py
       - run: cargo clippy --all --features java-interface --all-targets --target x86_64-linux-android
 
   build:
